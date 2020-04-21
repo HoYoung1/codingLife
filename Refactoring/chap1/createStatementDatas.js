@@ -3,7 +3,7 @@ export default function createStatementData(invoice, plays){
     result.customer = invoice.customer;
     result.performances = invoice.performances.map(enrichPerformance);
     result.totalAmount = totalAmount(result);
-    result.totalVolumeCredits = totalVolumeCredits(result);
+    result.s = totalVolumeCredits(result);
     return result;
 
     function enrichPerformance(aPerformance){

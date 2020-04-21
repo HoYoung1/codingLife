@@ -15,22 +15,10 @@ function renderPlainText(data, plays) {
     return result;
 }
 
-function usd(aNumber) {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency", currency: "USD",
-        minimumFractionDigits: 2
-    }).format(aNumber / 100);
-}
 
-function main(){
-    let rawdata = fs.readFileSync('invoices.json');
-    let invoices = JSON.parse(rawdata)
 
-    let rawdata2 = fs.readFileSync('plays.json');
-    let plays = JSON.parse(rawdata2)
-
-    // console.log(invoices[0].performances)
-    console.log(htmlStatement(invoices, plays))
+function htmlStatement(invoice, plays){
+    return renderHtml(createStatementData(invoice, plays));
 }
 
 function renderHtml(data){
@@ -47,7 +35,25 @@ function renderHtml(data){
     return result;
 }
 
-function htmlStatement(invoice, plays){
-    return renderHtml(createStatementData(invoice, plays));
+
+function usd(aNumber) {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency", currency: "USD",
+        minimumFractionDigits: 2
+    }).format(aNumber / 100);
 }
+
+function main(){
+    let rawdata = fs.readFileSync('invoices.json');
+    let invoices = JSON.parse(rawdata)
+    
+    let rawdata2 = fs.readFileSync('plays.json');
+    let plays = JSON.parse(rawdata2)
+    
+    // console.log(invoices[0].performances)
+
+    // console.log(statement(invoices, plays))
+    console.log(htmlStatement(invoices, plays))
+}
+
 main()
