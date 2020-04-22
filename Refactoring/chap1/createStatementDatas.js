@@ -1,12 +1,43 @@
-export default function createStatementData(invoice, plays){
+export default function createStatementData(invoice, plays) {
     const result = {};
     result.customer = invoice.customer;
     result.performances = invoice.performances.map(enrichPerformance);
     result.totalAmount = totalAmount(result);
-    result.s = totalVolumeCredits(result);
+    result.totalVolumeCredits = totalVolumeCredits(result);
+    console.log(result);
+
+    // {
+    //     customer: 'BigCo',
+    //     performances:
+    //         [{
+    //             playID: 'hamlet',
+    //             audience: 55,
+    //             play: [Object],
+    //             amount: 65000,
+    //             volumeCredits: 25
+    //         },
+    //         {
+    //             playID: 'as-like',
+    //             audience: 35,
+    //             play: [Object],
+    //             amount: 58000,
+    //             volumeCredits: 12
+    //         },
+    //         {
+    //             playID: 'othello',
+    //             audience: 40,
+    //             play: [Object],
+    //             amount: 50000,
+    //             volumeCredits: 10
+    //         }],
+    //     totalAmount: 173000,
+    //     totalVolumeCredits: 47
+    // }
     return result;
 
-    function enrichPerformance(aPerformance){
+    function enrichPerformance(aPerformance) {
+        const calculator = new PerformanceCalculator(aPerformance);
+
         const result = Object.assign({}, aPerformance); // 얕은 복사 수행
         result.play = playFor(result);
         result.amount = amountFor(result);
@@ -53,6 +84,12 @@ export default function createStatementData(invoice, plays){
     }
 
     function totalVolumeCredits(data) {
-        return data.performances.reduce((total, p) => total + p.volumeCredits, 0); 
+        return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
+    }
+}
+
+class PerformanceCalculator {
+    constructor(aPerformance){
+        this.performance = aPerformance;    
     }
 }
