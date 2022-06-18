@@ -1,14 +1,13 @@
 import json
 
-from python.create_statement_data import create_statement_data
-from python.create_statement_data_p66 import create_statement_data_p66
-from python.create_statement_data_p73 import create_statement_data_p73
+from python.chapter1.create_statement_data import create_statement_data
+from python.chapter1.create_statement_data_p66 import create_statement_data_p66
+from python.chapter1.create_statement_data_p73 import create_statement_data_p73
 from statement_p25 import statement
 from statement_p25_self_refactor import statement_self
 from statement_p29 import statement_p29
 from statement_p52_self_refactor import statement_p52_self
-from python.statement_p59 import statement_p59
-from python.statement_p59 import statement_p59
+from python.chapter1.statement_p59 import statement_p59
 
 if __name__ == '__main__':
     invoice: str = ""

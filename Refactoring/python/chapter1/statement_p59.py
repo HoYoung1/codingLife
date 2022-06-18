@@ -1,6 +1,6 @@
 from typing import Dict, Union, List
 
-from python.create_statement_data import create_statement_data
+from python.chapter1.create_statement_data import create_statement_data
 
 
 def statement_p59(invoice: Dict[str, Union[str, List]], plays: Dict[str, Dict]) -> str:
