@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "babel-node ./chap1/statement.js"
+    "start": "babel-node ./chapter6/6.9_client3.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

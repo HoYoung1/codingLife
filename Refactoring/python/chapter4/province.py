@@ -27,6 +27,7 @@ class Province:
     def _get_demand_value(self) -> int:
         return self._get_satified_demand() * self.price
 
+    # min(수요 or 총 생산량) = 30개 요청했지만 25개밖에 못 만들었음.
     def _get_satified_demand(self) -> int:
         return min(self.demand, self.total_production)
 

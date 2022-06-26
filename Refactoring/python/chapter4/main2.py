@@ -29,10 +29,10 @@ class TestProvince(unittest.TestCase):
     def test_profit(self):
         self.assertEqual(self.asia.get_profit(), 230)
 
-    def test_change_production(self):
-        self.asia.producers[0]["production"] = 20
-        self.assertEqual(self.asia.get_shortfall(), -6)
-        self.assertEqual(self.asia.get_profit(), 292)
+    # def test_change_production(self):
+    #     self.asia.producers[0]["production"] = 20
+    #     self.assertEqual(self.asia.get_shortfall(), -6)
+    #     self.assertEqual(self.asia.get_profit(), 292)
 
     def test_zero_demand(self):
         self.asia.demand = 0
@@ -51,6 +51,7 @@ class TestProvince(unittest.TestCase):
 
 
 class TestProvinceNoSetup(unittest.TestCase):
+
     def test_change_production(self):
         data = {
             "name": "Asia",
