@@ -1,3 +1,5 @@
+package chapter6;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -5,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class SplitPhase6_11_3_v2 {
+public class SplitPhase6_11_self {
     public static void main(String[] args) {
         try {
             System.out.println(run(args));
@@ -16,15 +18,17 @@ public class SplitPhase6_11_3_v2 {
     }
 
     private static long run(String[] args) throws IOException {
-        CommandLine_v2 commandLine = new CommandLine_v2(args);
-        return countOrders(commandLine);
-    }
-
-    private static long countOrders(CommandLine_v2 commandLine) throws IOException {
-        File input = Paths.get(commandLine.filename()).toFile();
+        if (args.length == 0) throw new RuntimeException("파일 명을 입력하세요");
+        String filename = args[args.length - 1];
+        File input = Paths.get(filename).toFile();
         ObjectMapper mapper = new ObjectMapper();
         Order[] orders = mapper.readValue(input, Order[].class);
-        if (commandLine.onlyCountReady()) {
+
+        return countOrders(args, orders);
+    }
+
+    private static long countOrders(String[] args, Order[] orders) {
+        if (Stream.of(args).anyMatch(arg -> "-r".equals(arg))) {
             return Stream
                     .of(orders)
                     .filter(o -> "ready".equals(o.status))

@@ -1,3 +1,5 @@
+package chapter6;
+
 import java.util.stream.Stream;
 
 public class CommandLine_v2 {

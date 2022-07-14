@@ -1,3 +1,5 @@
+package chapter6;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
