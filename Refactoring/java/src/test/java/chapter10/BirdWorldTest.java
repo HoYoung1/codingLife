@@ -30,7 +30,7 @@ class BirdWorldTest {
         Assertions.assertEquals(BirdWorld.speeds(birds),
                 Map.of(
                         "hy", 35,
-                        "hy2", 30,
+                        "hy2", 34,
                         "hy3", 0
                 )
         );
