@@ -15,13 +15,14 @@ public class Bird {
         this.isNailed = isNailed;
     }
 
-    public static String plumage(Bird bird) { // 깃털 상태
-        return switch (bird.getType()) {
-            case "유럽 제비" -> "보통이다";
-            case "아프리카 제비" -> bird.numberOfCoconuts() > 2 ? "지쳤다" : "보통이다";
-            case "노르웨이 파랑 앵무" -> bird.voltage() > 100 ? "그을렸다" : "예쁘다";
-            default -> "알 수 없다";
-        };
+    public String plumage() { // 깃털 상태
+//        return switch (bird.getType()) {
+//            case "유럽 제비" -> "보통이다";
+//            case "아프리카 제비" -> bird.numberOfCoconuts() > 2 ? "지쳤다" : "보통이다";
+//            case "노르웨이 파랑 앵무" -> bird.voltage() > 100 ? "그을렸다" : "예쁘다";
+//            default -> "알 수 없다";
+//        };
+        return BirdFactory.createBird(bird).plumage();
     }
 
     public static Integer airSpeedVelocity(Bird bird) { // 비행속도

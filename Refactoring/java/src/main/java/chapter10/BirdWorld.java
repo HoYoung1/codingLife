@@ -11,7 +11,7 @@ public class BirdWorld {
 
     public static Map plumages(List<Bird> birds) {
         Map<String, String> result = new HashMap<>();
-        birds.forEach(bird -> result.put(bird.getName(), Bird.plumage(bird)));
+        birds.forEach(bird -> result.put(bird.getName(), bird.plumage()));
         return result;
     }
 
