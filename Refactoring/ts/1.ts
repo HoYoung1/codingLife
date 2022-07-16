@@ -1,3 +1,2 @@
-function tt(params:String) {
-    console.log(params)
-}
+var a: number = 1;
+console.log(a);
