@@ -16,27 +16,65 @@ export function speeds(birds: IBird[]) {
 }
 
 function plumage(bird: IBird): string { // 깃털 상태
-    switch (bird.type) {
-        case '유럽 제비':
-            return '보통이다';
-        case '아프리카 제비':
-            return (bird.numberOfCoconuts > 2) ? "지쳤다" : "보통이다";
-        case '노르웨이 파랑 앵무':
-            return (bird.voltage > 100) ? "그을렸다": "예쁘다";
-        default:
-            return "알 수 없다";
-    }
+    return createBird(bird).plumage    
 }
 
 function airSpeedVelocity(bird: IBird): number | null { // 비행속도
+    return createBird(bird).airSpeedVelocity
+}
+
+class Bird {
+    bird: IBird
+
+    constructor(bird: IBird) {
+        this.bird = bird
+    }
+
+    get plumage(): string { // 깃털 상태
+        return "알 수 없다";
+    }
+    
+    get airSpeedVelocity(): number | null { // 비행속도
+        return null;
+    }
+}
+class EuropeanSwallow extends Bird {
+    get plumage(): string { // 깃털 상태
+         return '보통이다';
+    }
+    
+    get airSpeedVelocity(): number | null { // 비행속도
+        return 35;
+    }
+}
+class AfricanSwallow extends Bird {
+    get plumage(): string { // 깃털 상태
+       return (this.bird.numberOfCoconuts > 2) ? "지쳤다" : "보통이다";
+    }
+    
+    get airSpeedVelocity(): number | null { // 비행속도
+       return 40 - 2 * this.bird.numberOfCoconuts;
+    }
+}
+class NorwegianBlueParrot extends Bird {
+    get plumage(): string { // 깃털 상태
+       return (this.bird.voltage > 100) ? "그을렸다": "예쁘다";
+    }
+    
+    get airSpeedVelocity(): number | null { // 비행속도
+        return (this.bird.isNailed) ? 0: 10 + this.bird.voltage / 10;
+    }
+}
+
+function createBird(bird: IBird): Bird {
     switch (bird.type) {
         case '유럽 제비':
-            return 35;
+            return new EuropeanSwallow(bird);
         case '아프리카 제비':
-            return 40 - 2 * bird.numberOfCoconuts;
+            return new AfricanSwallow(bird);
         case '노르웨이 파랑 앵무':
-            return (bird.isNailed) ? 0: 10 + bird.voltage / 10;
+            return new NorwegianBlueParrot(bird);
         default:
-            return null;
+            return new Bird(bird);
     }
 }

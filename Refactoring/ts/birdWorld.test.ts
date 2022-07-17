@@ -46,31 +46,31 @@ test('speed(비행속도) 확인', () => {
 })
 
 
-// var abnormalData = [
-//     {
-//         name: "비정상 데이터",
-//         type: "유우럽 제비",
-//         numberOfCoconuts: -1,
-//         voltage: -1,
-//         isNailed: false,
-//     }
-// ]
+var abnormalData = [
+    {
+        name: "비정상 데이터",
+        type: "유우럽 제비",
+        numberOfCoconuts: -1,
+        voltage: -1,
+        isNailed: false,
+    }
+]
 
-// test('plumage(깃털상태) 비정상데이터', () => {
-//     expect(plumages(abnormalData)).toEqual(
-//         new Map([
-//             ['비정상 데이터', '알 수 없다'],
-//         ])
-//     );
-// })
+test('plumage(깃털상태) 비정상데이터', () => {
+    expect(plumages(abnormalData)).toEqual(
+        new Map([
+            ['비정상 데이터', '알 수 없다'],
+        ])
+    );
+})
 
 
-// test('speed(비행속도) 비정상데이터', () => {
-//     expect(speeds(abnormalData)).toEqual(
-//         new Map([
-//             ['비정상 데이터', null],
-//         ])
-//     );
-// })
+test('speed(비행속도) 비정상데이터', () => {
+    expect(speeds(abnormalData)).toEqual(
+        new Map([
+            ['비정상 데이터', null],
+        ])
+    );
+})
 
 
