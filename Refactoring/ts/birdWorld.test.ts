@@ -1,6 +1,3 @@
-// import Module from "module";
-
-// const plumages = require('./birdWorld');
 import { plumages, speeds } from './birdWorld'
 
 const birdData = [
