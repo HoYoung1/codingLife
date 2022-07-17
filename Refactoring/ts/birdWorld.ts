@@ -1,4 +1,4 @@
-interface Bird {
+interface IBird {
     name: string
     type: string
     numberOfCoconuts: number
@@ -6,16 +6,16 @@ interface Bird {
     isNailed: boolean
 }
 
-export function plumages(birds: Bird[]) {
+export function plumages(birds: IBird[]) {
     return new Map(birds.map(b => [b.name, plumage(b)]))
 }
 
 
-export function speeds(birds: Bird[]) {
+export function speeds(birds: IBird[]) {
     return new Map(birds.map(b => [b.name, airSpeedVelocity(b)]))
 }
 
-function plumage(bird: Bird) { // 깃털 상태
+function plumage(bird: IBird): string { // 깃털 상태
     switch (bird.type) {
         case '유럽 제비':
             return '보통이다';
@@ -28,7 +28,7 @@ function plumage(bird: Bird) { // 깃털 상태
     }
 }
 
-function airSpeedVelocity(bird: Bird) { // 비행속도
+function airSpeedVelocity(bird: IBird): number | null { // 비행속도
     switch (bird.type) {
         case '유럽 제비':
             return 35;
