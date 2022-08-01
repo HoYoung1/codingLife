@@ -7,6 +7,7 @@ const birdData = [
         numberOfCoconuts: 0,
         voltage: 0,
         isNailed: false,
+        plu
     },
     {
         name: "AfricanSwallow",

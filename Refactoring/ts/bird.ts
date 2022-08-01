@@ -6,37 +6,7 @@ interface IBird {
     isNailed: boolean
 }
 
-export function plumages(birds: IBird[]) {
-    return new Map(birds.map(b => [b.name, plumage(b)]))
-}
-
-
-export function speeds(birds: IBird[]) {
-    return new Map(birds.map(b => [b.name, airSpeedVelocity(b)]))
-}
-
-function createBird(bird: IBird): Bird {
-    switch (bird.type) {
-        case '유럽 제비':
-            return new EuropeanSwallow(bird);
-        case '아프리카 제비':
-            return new AfricanSwallow(bird);
-        case '노르웨이 파랑 앵무':
-            return new NorwegianBlueParrot(bird);
-        default:
-            return new Bird(bird);
-    }
-}
-
-function plumage(bird: IBird): string { // 깃털 상태
-    return createBird(bird).plumage    
-}
-
-function airSpeedVelocity(bird: IBird): number | null { // 비행속도
-    return createBird(bird).airSpeedVelocity
-}
-
-export class Bird {
+class Bird {
     bird: IBird
 
     constructor(bird: IBird) {
@@ -51,7 +21,7 @@ export class Bird {
         return null;
     }
 }
-export class EuropeanSwallow extends Bird {
+class EuropeanSwallow extends Bird {
     get plumage(): string { // 깃털 상태
          return '보통이다';
     }
@@ -60,7 +30,7 @@ export class EuropeanSwallow extends Bird {
         return 35;
     }
 }
-export class AfricanSwallow extends Bird {
+class AfricanSwallow extends Bird {
     get plumage(): string { // 깃털 상태
        return (this.bird.numberOfCoconuts > 2) ? "지쳤다" : "보통이다";
     }
@@ -69,7 +39,7 @@ export class AfricanSwallow extends Bird {
        return 40 - 2 * this.bird.numberOfCoconuts;
     }
 }
-export class NorwegianBlueParrot extends Bird {
+class NorwegianBlueParrot extends Bird {
     get plumage(): string { // 깃털 상태
        return (this.bird.voltage > 100) ? "그을렸다": "예쁘다";
     }
