@@ -9,6 +9,8 @@ public class Department extends Party {
     }
 
     public int annualCost() {
+        return this.
         return this.monthlyCost * 12;
+
     }
 }
