@@ -237,3 +237,22 @@ Spring Boot includes a number of additional features to help you monitor and man
 $ curl localhost:8080/actuator/health
 {"status":"UP"}
 ```
+
+
+
+
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-started.whats-next
+
+## 6.5. Spring Beans and Dependency Injection
+
+If you structure your code as suggested above (locating your application class in a top package), you can add @ComponentScan without any arguments or use the @SpringBootApplication annotation which implicitly includes it. All of your application components (@Component, @Service, @Repository, @Controller, and others) are automatically registered as Spring Beans.
+
+## 6.6. Using the @SpringBootApplication Annotation
+
+Many Spring Boot developers like their apps to use auto-configuration, component scan and be able to define extra configuration on their "application class". A single @SpringBootApplication annotation can be used to enable those three features, that is:
+
+- @EnableAutoConfiguration: enable Spring Boot’s auto-configuration mechanism
+
+- @ComponentScan: enable @Component scan on the package where the application is located (see the best practices)
+
+- @SpringBootConfiguration: enable registration of extra beans in the context or the import of additional configuration classes. An alternative to Spring’s standard @Configuration that aids configuration detection in your integration tests.
