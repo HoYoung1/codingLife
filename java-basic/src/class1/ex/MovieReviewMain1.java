@@ -1,6 +1,6 @@
 package class1.ex;
 
-public class MovieReviewMain {
+public class MovieReviewMain1 {
     public static void main(String[] args) {
         MovieReview inception = new MovieReview();
         inception.title = "인셉션";

@@ -1,38 +1,36 @@
 package ref.ex;
 
-import java.util.Arrays;
+import java.util.Scanner;
 
-public class ProductOrderMain2 {
+public class ProductOrderMain3 {
     public static void main(String[] args) {
-//        ProductOrder productOrder1 = new ProductOrder();
-//        productOrder1.productName = "두부";
-//        productOrder1.price = 2000;
-//        productOrder1.quantity = 2;
-//
-//        ProductOrder productOrder2 = new ProductOrder();
-//        productOrder2.productName = "김치";
-//        productOrder2.price = 5000;
-//        productOrder2.quantity = 1;
-//
-//        ProductOrder productOrder3 = new ProductOrder();
-//        productOrder3.productName = "콜라";
-//        productOrder3.price = 1500;
-//        productOrder3.quantity = 2;
+        Scanner scanner = new Scanner(System.in);
 
-        ProductOrder productOrder1 = createOrder("두부", 2000, 2);
-        ProductOrder productOrder2 = createOrder("김치", 5000, 1);
-        ProductOrder productOrder3 = createOrder("콜라", 1500, 2);
+        System.out.print("입력할 주문의 갯수를 입력하세요 : ");
+        int arrayNum = scanner.nextInt();
+        scanner.nextLine();
 
-        ProductOrder[] productOrders = {productOrder1, productOrder2, productOrder3};
+        ProductOrder[] productOrders = new ProductOrder[arrayNum];
 
-//        int totalAmount = 0;
-//        for (ProductOrder productOrder : productOrders) {
-//            System.out.println("상품명 : " + productOrder.productName + " 가격 : " + productOrder.price + " 수량 : " + productOrder.quantity);
-//
-//            totalAmount += productOrder.price * productOrder.quantity;
-//        }
-//
-//        System.out.println("totalAmount = " + totalAmount);
+        for (int i = 0; i < arrayNum; i++) {
+            System.out.println((i+1)+"번째 주문 정보를 입력하세요. ");
+            System.out.print("상품명 : ");
+            String productName = scanner.nextLine();
+            System.out.print("가격 : ");
+            int price = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("수량 : ");
+            int quantity = scanner.nextInt();
+            scanner.nextLine();
+
+            productOrders[i] = createOrder(productName, price, quantity);
+        }
+
+//        ProductOrder productOrder1 = createOrder("두부", 2000, 2);
+//        ProductOrder productOrder2 = createOrder("김치", 5000, 1);
+//        ProductOrder productOrder3 = createOrder("콜라", 1500, 2);
+
+//        ProductOrder[] productOrders = {productOrder1, productOrder2, productOrder3};
 
         printOrders(productOrders);
         System.out.println("total : " + getTotalAmount(productOrders));
