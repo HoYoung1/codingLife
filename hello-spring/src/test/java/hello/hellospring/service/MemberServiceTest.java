@@ -14,10 +14,10 @@ class MemberServiceTest {
     MemoryMemberRepository repository;
     MemberService memberService;
 
-//    @AfterEach
-//    public void afterEach() {
-//        repository.clearStore();
-//    }
+    @AfterEach
+    public void afterEach() {
+        repository.clearStore();
+    }
 
     @BeforeEach
     public void beforeEach() {
