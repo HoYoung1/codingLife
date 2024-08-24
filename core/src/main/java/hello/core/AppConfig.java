@@ -12,21 +12,25 @@ public class AppConfig {
 
     @Bean
     public MemberServiceImpl memberService() {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public  MemoryMemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderServiceImpl orderService() {
+        System.out.println("call orderService");
         return new OrderServiceImpl(memberRepository(), discountRepository());
     }
 
     @Bean
     public FixDiscountPolicy discountRepository() {
+        System.out.println("call AppConfig.discountRepository");
         return new FixDiscountPolicy();
     }
 }
