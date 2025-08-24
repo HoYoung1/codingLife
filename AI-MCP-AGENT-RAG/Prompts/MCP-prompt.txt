@@ -1,0 +1,33 @@
+MCP 개념은 대충은 알겠거든?
+요즘 하도 많이나오니까... 유튜브에서 대충 봐서 알긴하는데, 코드로 구현해본적은없어.
+
+우선 내가 대충 알고있는 개념에 대해서 설명해줄게.
+LLM 과 시스템이 상호작용할 수 있는 인터페이스? 라는 설명을 많이봤어.
+내가 이해하기로는 LLM이 시스템을 호출하기위해 중간에 위치시켜서, 
+LLM -> System API 이렇게 하고싶고 mcp를 중간에위치시켜서...
+LLM -> MCP server -> System API 이렇다고 보면되는걸까?
+'우리 시스템을 llm이 이해할수있게해주는.....그런어떤거?'
+
+MCP server에서는 System API 에서 어떤걸 호출할수있고...이런게 정의되어있겠지?
+만약 gmail mcp 면 EmailGetList, EmailPost 뭐 이런 Api 들이 있을거고 MCP 서버는 그런걸 할 수 있게해주는건가?
+slack mcp면 postMessage, getChannels 뭐 이런 api들을 호출, 할수있는...? 
+한번 만들어봐야 알듯.
+
+위 내용도 좀 한번 설명해주고, MCP의 전반적인 내용을 코드로도 직접 구현해보면서 공부해보자
+
+현재 프로젝트 구조보면, 어제 rag에 대해서 공부했거든. src프로젝트랑, examples 는 폴더하나씩 더 만들어서 어제공부한내용이랑 구분해도될듯?
+너맘대로~
+
+-----
+Question1 
+
+mcp_server.py 를 보니까 LLM이 쓸수있는 api 들을 잘 알려주고있는것같네.
+궁금점이 하나 생겼는데, 그러면  사실 LLM이 api server의 openapi.json 같은거 읽어서 description 같은거읽어서 어떤 도구(api)들 쓸수있다. 이렇게 파악하면 되는거아니야?
+mcp 서버라는걸 굳이 둬야하나? 내가 모르는 역할이 더 있는것같기도하고...?
+이론공부목적이니 설명좀해줄래?
+
+Question2
+일단 gmail mcp, notion mcp, slack mcp 이런 제품들의 mcp를 생각했을때,
+그럼 MCP 구현체는 api 1개 호출일수도있고... 여러개 호출일수도있고, 약간  api들의 추상화 같은개념이라고보면되나?LLM이 호출할 수 있는...?
+그럼 실제로는 mcp server의 구현 로직을 보면 이것저것 서버에서 제공하는 api들의 구현체?  로직들? 의 집합이라고보면되나?
+근데 그럼사실 llm도 mcp server의 function_list(기능 리스트)를 가져와서 그안에서 호출가능하니 사실 mcp server도 llm용 api server라고 보면되는건가?
