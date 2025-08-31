@@ -19,12 +19,12 @@
   - _Requirements: 3.3_
 
 - [ ] 3. useState Hook 실습 컴포넌트 구현
-- [ ] 3.1 기본 상태 관리 컴포넌트 작성
+- [x] 3.1 기본 상태 관리 컴포넌트 작성
   - CounterExample.jsx로 숫자 상태 증감 기능 구현
   - 상태 업데이트 함수와 리렌더링 동작 원리 주석으로 설명
   - _Requirements: 2.1_
 
-- [ ] 3.2 폼 상태 관리 컴포넌트 구현
+- [x] 3.2 폼 상태 관리 컴포넌트 구현
   - FormExample.jsx로 입력 필드 상태 관리 구현
   - ToggleExample.jsx로 불린 상태 토글 기능 구현
   - 각 Hook의 동작 원리를 상세한 주석으로 설명

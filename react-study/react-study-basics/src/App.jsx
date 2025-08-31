@@ -4,6 +4,9 @@ import HelloWorld from './components/HelloWorld'
 import PropsExample from './components/PropsExample'
 import ConditionalRender from './components/ConditionalRender'
 import ListRender from './components/ListRender'
+import CounterExample from './components/hooks/CounterExample'
+import FormExample from './components/hooks/FormExample'
+import ToggleExample from './components/hooks/ToggleExample'
 
 function App() {
   // 현재 보여줄 컴포넌트를 관리하는 상태
@@ -20,6 +23,12 @@ function App() {
         return <ConditionalRender />
       case 'list':
         return <ListRender />
+      case 'counter':
+        return <CounterExample />
+      case 'form':
+        return <FormExample />
+      case 'toggle':
+        return <ToggleExample />
       default:
         return (
           <div>
@@ -88,6 +97,24 @@ function App() {
             className={currentComponent === 'list' ? 'active' : ''}
           >
             리스트 렌더링
+          </button>
+          <button 
+            onClick={() => setCurrentComponent('counter')}
+            className={currentComponent === 'counter' ? 'active' : ''}
+          >
+            useState 카운터
+          </button>
+          <button 
+            onClick={() => setCurrentComponent('form')}
+            className={currentComponent === 'form' ? 'active' : ''}
+          >
+            폼 상태 관리
+          </button>
+          <button 
+            onClick={() => setCurrentComponent('toggle')}
+            className={currentComponent === 'toggle' ? 'active' : ''}
+          >
+            토글 기능
           </button>
         </nav>
       </header>
