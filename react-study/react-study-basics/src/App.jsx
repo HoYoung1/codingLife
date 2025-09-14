@@ -7,6 +7,9 @@ import ListRender from './components/ListRender'
 import CounterExample from './components/hooks/CounterExample'
 import FormExample from './components/hooks/FormExample'
 import ToggleExample from './components/hooks/ToggleExample'
+import EffectExample from './components/hooks/EffectExample'
+import ApiExample from './components/hooks/ApiExample'
+import TimerExample from './components/hooks/TimerExample'
 
 function App() {
   // 현재 보여줄 컴포넌트를 관리하는 상태
@@ -29,6 +32,12 @@ function App() {
         return <FormExample />
       case 'toggle':
         return <ToggleExample />
+      case 'effect':
+        return <EffectExample />
+      case 'api':
+        return <ApiExample />
+      case 'timer':
+        return <TimerExample />
       default:
         return (
           <div>
@@ -115,6 +124,24 @@ function App() {
             className={currentComponent === 'toggle' ? 'active' : ''}
           >
             토글 기능
+          </button>
+          <button 
+            onClick={() => setCurrentComponent('effect')}
+            className={currentComponent === 'effect' ? 'active' : ''}
+          >
+            useEffect 기본
+          </button>
+          <button 
+            onClick={() => setCurrentComponent('api')}
+            className={currentComponent === 'api' ? 'active' : ''}
+          >
+            API 호출
+          </button>
+          <button 
+            onClick={() => setCurrentComponent('timer')}
+            className={currentComponent === 'timer' ? 'active' : ''}
+          >
+            타이머 & 클린업
           </button>
         </nav>
       </header>

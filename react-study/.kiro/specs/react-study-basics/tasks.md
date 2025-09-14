@@ -31,12 +31,12 @@
   - _Requirements: 2.1, 2.3_
 
 - [ ] 4. useEffect Hook 실습 컴포넌트 구현
-- [ ] 4.1 기본 사이드 이펙트 처리 구현
+- [x] 4.1 기본 사이드 이펙트 처리 구현
   - EffectExample.jsx로 컴포넌트 생명주기와 useEffect 관계 학습
   - dependency array의 동작 방식을 예제로 구현
   - _Requirements: 2.2, 2.3_
 
-- [ ] 4.2 API 호출과 클린업 패턴 구현
+- [x] 4.2 API 호출과 클린업 패턴 구현
   - ApiExample.jsx로 useEffect 내에서 API 호출 구현
   - TimerExample.jsx로 타이머 설정과 클린업 함수 구현
   - 메모리 누수 방지를 위한 클린업 패턴 설명
