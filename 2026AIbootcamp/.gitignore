@@ -1,0 +1,23 @@
+# 환경변수 / 시크릿
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# 가상환경
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# RAG 인덱스 (재생성 가능)
+backend/rag/faiss_index/
+
+# 로컬 도구 설정
+.claude/settings.local.json
+*.local.json

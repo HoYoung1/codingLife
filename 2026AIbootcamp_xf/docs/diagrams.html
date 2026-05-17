@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>PMO AI Hub — 아키텍처 & 서비스 플로우</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      padding: 40px 24px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #2d3748;
+    }
+    .subtitle {
+      text-align: center;
+      color: #718096;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+      padding: 32px 36px;
+      margin-bottom: 48px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: #2b6cb0;
+      margin-bottom: 6px;
+      border-left: 4px solid #4299e1;
+      padding-left: 12px;
+    }
+    .desc {
+      color: #718096;
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+      padding-left: 16px;
+    }
+    .mermaid { overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>PMO AI Hub</h1>
+  <p class="subtitle">Multi-Agent 아키텍처 다이어그램 &amp; 서비스 플로우</p>
+
+  <!-- ① Multi-Agent Architecture -->
+  <div class="card">
+    <h2>① Multi-Agent 아키텍처</h2>
+    <p class="desc">Orchestrator가 의도를 분류하고, 4개의 전문 Agent가 각 도메인을 담당합니다. Report Agent는 나머지 3개 Agent를 직접 호출하는 A2A 구조입니다.</p>
+    <div class="mermaid">
+graph TB
+    subgraph UI["🖥️  Streamlit UI (app.py)"]
+        D["📊 대시보드"]
+        C["💬 AI 어시스턴트"]
+        N["🔔 알림 센터"]
+        R["📋 종합 리포트"]
+    end
+
+    subgraph ORCH["🧠 Orchestrator"]
+        LLM_C["LLM 의도 분류\n(GPT-4o-mini)"]
+    end
+
+    subgraph AGENTS["🤖 전문 Agent 레이어"]
+        direction LR
+        ACA["🪪 Access Card Agent\n출입카드 관리"]
+        COA["📄 Contract Agent\n계약 관리 (RAG)"]
+        TRA["📚 Training Agent\n교육 출석 관리"]
+        REP["📋 Report Agent\nA2A 종합 리포트"]
+    end
+
+    subgraph BASE["⚙️  Base Agent (공통 실행 엔진)"]
+        TC["Tool Calling Loop\n(LLM ↔ Tool 반복)"]
+    end
+
+    subgraph TOOLS["🔧 Tool 레이어"]
+        direction LR
+        CT["card_tools\n만료조회·알림생성"]
+        CONT["contract_tools\n계약검색·만료조회"]
+        TT["training_tools\n출석조회·랭킹"]
+    end
+
+    subgraph DATA["💾 데이터 레이어"]
+        direction LR
+        CSV1["access_cards.csv"]
+        CSV2["contracts/*.txt"]
+        CSV3["training_*.csv"]
+        RAG["RAG\nRetriever"]
+    end
+
+    C --> ORCH
+    R --> REP
+    ORCH --> LLM_C
+    LLM_C -->|card| ACA
+    LLM_C -->|contract| COA
+    LLM_C -->|training| TRA
+    LLM_C -->|report| REP
+
+    REP -->|A2A 호출| ACA
+    REP -->|A2A 호출| COA
+    REP -->|A2A 호출| TRA
+
+    ACA --> BASE
+    COA --> BASE
+    TRA --> BASE
+
+    BASE --> TC
+    TC --> CT
+    TC --> CONT
+    TC --> TT
+
+    CT --> CSV1
+    CONT --> RAG
+    RAG --> CSV2
+    TT --> CSV3
+
+    style UI fill:#ebf8ff,stroke:#90cdf4
+    style ORCH fill:#faf5ff,stroke:#d6bcfa
+    style AGENTS fill:#f0fff4,stroke:#9ae6b4
+    style BASE fill:#fffaf0,stroke:#fbd38d
+    style TOOLS fill:#fff5f5,stroke:#feb2b2
+    style DATA fill:#f7fafc,stroke:#cbd5e0
+    style REP fill:#c6f6d5,stroke:#38a169
+    </div>
+  </div>
+
+  <!-- ② 서비스 플로우 — 일반 질의 -->
+  <div class="card">
+    <h2>② 서비스 플로우 — AI 어시스턴트 질의 (Sequence Diagram)</h2>
+    <p class="desc">사용자가 질문을 입력하면 Orchestrator가 의도를 분류하고, 해당 전문 Agent가 Tool Calling 루프를 통해 데이터를 조회해 답변을 생성합니다.</p>
+    <div class="mermaid">
+sequenceDiagram
+    actor 사용자
+    participant UI as 💬 Streamlit UI
+    participant ORCH as 🧠 Orchestrator
+    participant LLM1 as GPT-4o-mini<br/>(Intent)
+    participant AGENT as 전문 Agent<br/>(Card/Contract/Training)
+    participant LLM2 as GPT-4o-mini<br/>(Tool Calling)
+    participant TOOL as 🔧 Tool
+    participant DATA as 💾 데이터
+
+    사용자->>UI: 질문 입력<br/>"30일 내 만료 카드 알려줘"
+    UI->>ORCH: run_pmo_agent(query)
+    ORCH->>LLM1: 의도 분류 프롬프트
+    LLM1-->>ORCH: "card"
+    ORCH->>AGENT: run_access_card_agent(query)
+
+    loop Tool Calling 루프 (최대 10회)
+        AGENT->>LLM2: 시스템 프롬프트 + 질문
+        LLM2-->>AGENT: tool_calls 반환<br/>[check_expiring_cards]
+        AGENT->>TOOL: tool.invoke(args)
+        TOOL->>DATA: access_cards.csv 조회
+        DATA-->>TOOL: 카드 데이터 반환
+        TOOL-->>AGENT: ToolMessage (결과)
+        AGENT->>LLM2: 메시지 이력 + ToolMessage
+        LLM2-->>AGENT: 최종 답변 (tool_calls 없음)
+    end
+
+    AGENT-->>ORCH: 답변 텍스트
+    ORCH-->>UI: 답변 반환
+    UI-->>사용자: 마크다운 렌더링
+    </div>
+  </div>
+
+  <!-- ③ 서비스 플로우 — 종합 리포트 A2A -->
+  <div class="card">
+    <h2>③ 서비스 플로우 — 종합 리포트 A2A (Sequence Diagram)</h2>
+    <p class="desc">Report Agent가 Access Card / Contract / Training Agent를 순차 호출(A2A)하고, GPT-4o로 통합 분석 리포트를 생성합니다.</p>
+    <div class="mermaid">
+sequenceDiagram
+    actor 사용자
+    participant UI as 📋 종합 리포트 페이지
+    participant REP as 📋 Report Agent
+    participant ACA as 🪪 Access Card Agent
+    participant COA as 📄 Contract Agent
+    participant TRA as 📚 Training Agent
+    participant LLM_R as GPT-4o<br/>(종합 분석)
+
+    사용자->>UI: "리포트 생성" 클릭
+    UI->>REP: run_report_agent()
+
+    Note over REP,ACA: A2A 호출 ①
+    REP->>ACA: "전체 출입카드 현황 요약"
+    ACA-->>REP: 카드 현황 텍스트
+
+    Note over REP,COA: A2A 호출 ②
+    REP->>COA: "전체 계약·60일 내 만료 계약"
+    COA-->>REP: 계약 현황 텍스트
+
+    Note over REP,TRA: A2A 호출 ③
+    REP->>TRA: "전체 교육 출석률 현황 요약"
+    TRA-->>REP: 교육 현황 텍스트
+
+    REP->>LLM_R: 시스템 프롬프트 + 3개 Agent 결과
+    LLM_R-->>REP: 종합 현황 리포트 (Markdown)
+
+    REP-->>UI: {card, contract, training, report}
+    UI-->>사용자: 탭별 결과 표시
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+  </script>
+</body>
+</html>
